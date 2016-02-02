@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Cite Trove",
+  "version": "0.1",
+  "description": "Copies selected information from the NLA Trove Newspaper website to the clipboard.",
+  "icons": {
+    "16": "icon16.png",
+    "19": "icon19.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+    },
+  "page_action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "19": "icon19.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "default_title": "Cite Trove"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://trove.nla.gov.au/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "clipboardWrite",
+    "contextMenus",
+    "tabs",
+    "storage",
+    "http://trove.nla.gov.au/*"
+  ]
+}
