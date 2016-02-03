@@ -66,3 +66,16 @@ chrome.runtime.onMessage.addListener(function(message) {
         input.remove();
     }
 });
+
+
+// Called when the url of a tab changes.
+function checkForValidUrl(tabId, changeInfo, tab) {
+    // If the tabs url includes "trove.nla.gov.au"...
+    if (tab.url.indexOf('trove.nla.gov.au') > -1) {
+        // ... show the page action.
+        chrome.pageAction.show(tabId);
+    }
+};
+
+// Listen for any changes to the URL of any tab.
+chrome.tabs.onUpdated.addListener(checkForValidUrl);
