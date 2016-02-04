@@ -21,7 +21,7 @@
     "default_title": "Cite Trove"
   },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["formatter.js", "background.js"],
     "persistent": false
   },
   "content_scripts": [
@@ -38,7 +38,7 @@
   "permissions": [
     "clipboardWrite",
     "contextMenus",
-    "tabs",
+    "declarativeContent",
     "storage",
     "http://trove.nla.gov.au/*"
   ]
