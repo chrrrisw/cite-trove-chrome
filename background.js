@@ -7,8 +7,8 @@
  */
 function citeTroveResponseHandler(response) {
     console.log('Response received');
-    console.log('\t' + chrome.runtime.lastError);
-    console.log('\t' + JSON.stringify(response));
+    console.log('\tError: ' + chrome.runtime.lastError);
+    console.log('\tResponse: ' + JSON.stringify(response));
 }
 
 /**
@@ -78,7 +78,7 @@ var pageActionRule = {
 chrome.runtime.onInstalled.addListener(function(details) {
     chrome.contextMenus.create({
         "title" : "Cite Trove",
-        "contexts" : [ "selection" ],
+        "contexts" : ["selection"],
         "id" : "citeTrove",
         "documentUrlPatterns": ["http://trove.nla.gov.au/*"]
     });
@@ -87,3 +87,13 @@ chrome.runtime.onInstalled.addListener(function(details) {
         chrome.declarativeContent.onPageChanged.addRules([pageActionRule]);
     });
 });
+
+function pageActionCallback(tab) {
+    console.log('pageAction pressed');
+    chrome.tabs.sendMessage(
+        tab.id,
+        {type : "cite"},
+        citeTroveResponseHandler);
+}
+
+chrome.pageAction.onClicked.addListener(pageActionCallback);
