@@ -5,8 +5,6 @@
  * per the format specified.
  */
 
-//http://trove.nla.gov.au/ndp/del/article/110644884?searchTerm=space&searchLimits=
-//http://trove.nla.gov.au/ndp/del/article/109648159/11912181?zoomLevel=3
 var page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
 
 function formatCitation(format, fields) {

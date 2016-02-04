@@ -15,10 +15,6 @@ function citeTroveResponseHandler(response) {
  * The callback function for the citeTrove menu item.
  */
 function onClickHandler(info, tab) {
-    //console.log("item " + info.menuItemId + " was clicked");
-    // console.log("info: " + JSON.stringify(info));
-    // console.log("tab: " + JSON.stringify(tab));
-
     if (info.menuItemId == "citeTrove") {
         console.log('citeTrove pressed');
         chrome.tabs.sendMessage(
@@ -26,43 +22,19 @@ function onClickHandler(info, tab) {
             {type : "cite"},
             citeTroveResponseHandler);
 
-        //console.log(tab.url);
-
-        // console.log("START\n" + truncated_url + "\n" + today + "\n"
-        //         + newspaper_title + "\n" + newspaper_issue + ", page "
-        //         + newspaper_page + "\n[Quote]\n" + selection + "\n[Quote]\n")
-
-        // document.execCommand('copy');
     } else {
         console.log('Not citeTrove menu item');
-    }
 
+    }
 };
 
 /**
- *
+ * Add a listener for clicks in the context menu.
  */
 chrome.contextMenus.onClicked.addListener(onClickHandler);
 
-// chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
-//     console.log("tabId: " + JSON.stringify(tabId));
-//     if (change.status == "complete") {
-//         console.log(tab.url);
-//     }
-// });
-
-// chrome.tabs.onSelectionChanged.addListener(function(tabId, info) {
-//     console.log("tabId: " + JSON.stringify(tabId));
-//     console.log("info: " + JSON.stringify(info));
-
-// });
-
-// chrome.pageAction.onClicked.addListener(function(tab) {
-//     console.log(tab);
-// });
-
 /**
- *
+ * Get the format from storage, format the citation, put it in selection.
  */
 function formatAndCopy(message) {
     chrome.storage.sync.get({
@@ -77,12 +49,10 @@ function formatAndCopy(message) {
         input.remove();
 
       });
-
-
 }
 
 /**
- *
+ * Add a listener for messages from the content script.
  */
 chrome.runtime.onMessage.addListener(function(message) {
     if (message && message.type == "citation") {
@@ -91,9 +61,8 @@ chrome.runtime.onMessage.addListener(function(message) {
 });
 
 /**
- *
+ * A rule to show the pageAction on the trove.nla.gov.au site.
  */
-// A rule to show the pageAction on the trove.nla.gov.au site.
 var pageActionRule = {
     conditions: [
         new chrome.declarativeContent.PageStateMatcher({
@@ -104,11 +73,9 @@ var pageActionRule = {
 };
 
 /**
- *
+ * When installed set up context menu item and add a rule to show pageAction.
  */
-// When installed ...
 chrome.runtime.onInstalled.addListener(function(details) {
-    // ... set up context menu tree.
     chrome.contextMenus.create({
         "title" : "Cite Trove",
         "contexts" : [ "selection" ],
@@ -116,21 +83,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         "documentUrlPatterns": ["http://trove.nla.gov.au/*"]
     });
 
-    // ... and add a rule to show pageAction
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([pageActionRule]);
     });
 });
-
-// // Called when the url of a tab changes.
-// function checkForValidUrl(tabId, changeInfo, tab) {
-//     // If the tabs url includes "trove.nla.gov.au"...
-//     if (tab.url.indexOf('trove.nla.gov.au') > -1) {
-//         // ... show the page action.
-//         chrome.pageAction.show(tabId);
-//     }
-// };
-
-// // Listen for any changes to the URL of any tab.
-// chrome.tabs.onUpdated.addListener(checkForValidUrl);
-
