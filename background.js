@@ -1,16 +1,30 @@
-// The onClicked callback function.
+/**
+ * @author Chris Willoughby
+ */
+
+/**
+ *
+ */
+function citeTroveResponseHandler(response) {
+    console.log('Response received');
+    console.log('\t' + chrome.runtime.lastError);
+    console.log('\t' + JSON.stringify(response));
+}
+
+/**
+ * The callback function for the citeTrove menu item.
+ */
 function onClickHandler(info, tab) {
     //console.log("item " + info.menuItemId + " was clicked");
-    console.log("info: " + JSON.stringify(info));
-    console.log("tab: " + JSON.stringify(tab));
+    // console.log("info: " + JSON.stringify(info));
+    // console.log("tab: " + JSON.stringify(tab));
 
     if (info.menuItemId == "citeTrove") {
-        chrome.tabs.sendMessage(tab.id, {
-            type : "cite"
-        }, function(response) {
-            console.log(chrome.runtime.lastError);
-            console.log(response);
-        });
+        console.log('citeTrove pressed');
+        chrome.tabs.sendMessage(
+            tab.id,
+            {type : "cite"},
+            citeTroveResponseHandler);
 
         //console.log(tab.url);
 
@@ -20,23 +34,15 @@ function onClickHandler(info, tab) {
 
         // document.execCommand('copy');
     } else {
-        console.log('Not citeTrove');
+        console.log('Not citeTrove menu item');
     }
 
 };
 
+/**
+ *
+ */
 chrome.contextMenus.onClicked.addListener(onClickHandler);
-
-//Set up context menu tree at install time.
-chrome.runtime.onInstalled.addListener(function() {
-    // Create one test item for each context type.
-    chrome.contextMenus.create({
-        "title" : "Cite Trove",
-        "contexts" : [ "selection" ],
-        "id" : "citeTrove",
-        "documentUrlPatterns": ["http://trove.nla.gov.au/*"]
-    });
-});
 
 // chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 //     console.log("tabId: " + JSON.stringify(tabId));
@@ -55,27 +61,76 @@ chrome.runtime.onInstalled.addListener(function() {
 //     console.log(tab);
 // });
 
-chrome.runtime.onMessage.addListener(function(message) {
-    if (message && message.type == "citation") {
+/**
+ *
+ */
+function formatAndCopy(message) {
+    chrome.storage.sync.get({
+        troveFormat: '%A%n%C%n%T%n%I, page %P%n[Quote]%n%Q%n[Quote]%n'
+      }, function(items) {
         var input = document.createElement('textarea');
         document.body.appendChild(input);
-        input.value = message.title;
+        input.value = formatCitation(items.troveFormat, message);
         input.focus();
         input.select();
         document.execCommand('Copy');
         input.remove();
+
+      });
+
+
+}
+
+/**
+ *
+ */
+chrome.runtime.onMessage.addListener(function(message) {
+    if (message && message.type == "citation") {
+        formatAndCopy(message);
     }
 });
 
-
-// Called when the url of a tab changes.
-function checkForValidUrl(tabId, changeInfo, tab) {
-    // If the tabs url includes "trove.nla.gov.au"...
-    if (tab.url.indexOf('trove.nla.gov.au') > -1) {
-        // ... show the page action.
-        chrome.pageAction.show(tabId);
-    }
+/**
+ *
+ */
+// A rule to show the pageAction on the trove.nla.gov.au site.
+var pageActionRule = {
+    conditions: [
+        new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { hostEquals: 'trove.nla.gov.au', schemes: ['http', 'https'] }
+        })
+    ],
+    actions: [ new chrome.declarativeContent.ShowPageAction() ]
 };
 
-// Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
+/**
+ *
+ */
+// When installed ...
+chrome.runtime.onInstalled.addListener(function(details) {
+    // ... set up context menu tree.
+    chrome.contextMenus.create({
+        "title" : "Cite Trove",
+        "contexts" : [ "selection" ],
+        "id" : "citeTrove",
+        "documentUrlPatterns": ["http://trove.nla.gov.au/*"]
+    });
+
+    // ... and add a rule to show pageAction
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+        chrome.declarativeContent.onPageChanged.addRules([pageActionRule]);
+    });
+});
+
+// // Called when the url of a tab changes.
+// function checkForValidUrl(tabId, changeInfo, tab) {
+//     // If the tabs url includes "trove.nla.gov.au"...
+//     if (tab.url.indexOf('trove.nla.gov.au') > -1) {
+//         // ... show the page action.
+//         chrome.pageAction.show(tabId);
+//     }
+// };
+
+// // Listen for any changes to the URL of any tab.
+// chrome.tabs.onUpdated.addListener(checkForValidUrl);
+
