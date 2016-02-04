@@ -31,6 +31,7 @@
       "js": ["scraper.js", "content.js"]
     }
   ],
+  "homepage_url": "https://chrrrisw.github.io/cite-trove-chrome/",
   "minimum_chrome_version": "33",
   "options_page": "options.html",
   "options_ui": {
@@ -41,7 +42,6 @@
     "clipboardWrite",
     "contextMenus",
     "declarativeContent",
-    "storage",
-    "http://trove.nla.gov.au/*"
+    "storage"
   ]
 }

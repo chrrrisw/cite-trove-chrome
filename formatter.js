@@ -5,6 +5,8 @@
  * per the format specified.
  */
 
+exports.formatCitation = formatCitation;
+
 var page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
 
 function formatCitation(format, fields) {
