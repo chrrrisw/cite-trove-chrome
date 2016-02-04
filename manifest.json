@@ -20,6 +20,7 @@
     },
     "default_title": "Cite Trove"
   },
+  "author": "Chris Willoughby",
   "background": {
     "scripts": ["formatter.js", "background.js"],
     "persistent": false
@@ -30,6 +31,7 @@
       "js": ["scraper.js", "content.js"]
     }
   ],
+  "minimum_chrome_version": "33",
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
