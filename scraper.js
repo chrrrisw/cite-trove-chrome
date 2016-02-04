@@ -1,13 +1,14 @@
 /**
  * @author Chris Willoughby
  */
+
 function parsePage() {
 
     // Get the selected text
-    var selection = window.getSelection();
+    var selection = window.getSelection().toString();
 
     // Get the current date and time
-    var today = new Date();
+    var today = new Date().toString();
 
     // Get the URL
     var article_url = location.href;
@@ -71,7 +72,7 @@ function parsePage() {
         'title': newspaper_title,
         'issue': newspaper_issue,
         'page': newspaper_page,
-        'selection': selection.toString()
+        'selection': selection
     };
 
 }
