@@ -14,25 +14,29 @@ function parsePage() {
     var article_url = location.href;
 
     // Get the newspaper title
-    var newspaper_title = "Unknown";
-    var title_box = document.getElementsByClassName("box title")[0];
-    if (title_box != null) {
-        var title_heading = title_box.getElementsByTagName("h1")[0];
+    // First we try to get an element with the class "box title",
+    // if that fails, we're not on the original newspaper site.
+    // There are two possibilities: that we're somewhere else on the
+    // Trove site, or the newspaper site has been updated.
+    var newspaper_title = "";
+    var title_element = document.getElementsByClassName("box title")[0];
+    if (title_element != null) {
+        var title_heading = title_element.getElementsByTagName("h1")[0];
         if (title_heading != null) {
             newspaper_title = title_heading.innerHTML;
         }
     } else {
-        console.log('New Title interface');
-        var title_selector = document.querySelectorAll("[ref=ndp\\:titleSelector]")[0];
-        console.log(title_selector);
-        if (title_selector != null) {
-            newspaper_title = title_selector.innerHTML;
+        // Let's see if we're on the updated site.
+        var title_element = document.querySelectorAll("[ref=ndp\\:titleSelector]")[0];
+        if (title_element != null) {
+            console.log(title_element);
+            newspaper_title = title_element.innerHTML;
         }
     }
     console.log('Title: ' + newspaper_title);
 
     // Get the issue
-    var newspaper_issue = "Unknown";
+    var newspaper_issue = "";
     var issue_box = document.getElementsByClassName("box issue")[0];
     if (issue_box != null) {
         var issue_strong = issue_box.getElementsByTagName("strong")[0];
@@ -46,7 +50,7 @@ function parsePage() {
     console.log('Issue: ' + newspaper_issue);
 
     // And the page
-    var newspaper_page = "Unknown";
+    var newspaper_page = "";
     var pages_box = document.getElementsByClassName("box pages")[0];
     if (pages_box != null) {
         var all_options = pages_box.getElementsByTagName("option");
@@ -59,7 +63,7 @@ function parsePage() {
         }
     } else {
         console.log('New Page interface');
-        var date_selector = document.querySelectorAll("[ref=ndp\\: pageSelector]")[0];
+        var date_selector = document.querySelectorAll("[ref=ndp\\:pageSelector]")[0];
 
     }
     console.log('Page: ' + newspaper_page);

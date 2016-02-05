@@ -5,7 +5,9 @@
  * per the format specified.
  */
 
-exports.formatCitation = formatCitation;
+if (typeof exports != 'undefined') {
+    exports.formatCitation = formatCitation;
+}
 
 var page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
 
