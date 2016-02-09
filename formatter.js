@@ -38,14 +38,20 @@ function formatCitation(format, fields) {
 
         // %A - Persistent Article URL (preferred)
         else if (match == "%A") {
-            var page_match = fields.url.match(page_regexp);
-            if (page_match == null)
-                return fields.url;
 
-            if (page_match.length == 0)
-                return fields.url;
-            else
-                return "http://nla.gov.au/nla.news-article" + page_match[0].match("\\d+");
+            if (fields.persistent_url) {
+                // New interface
+                return fields.persistent_url;
+            } else {
+                var page_match = fields.url.match(page_regexp);
+                if (page_match == null)
+                    return fields.url;
+
+                if (page_match.length == 0)
+                    return fields.url;
+                else
+                    return "http://nla.gov.au/nla.news-article" + page_match[0].match("\\d+");
+            }
 
         }
 
@@ -68,6 +74,10 @@ function formatCitation(format, fields) {
         // %Q - Selected OCR Text
         else if (match == "%Q")
             return fields.selection;
+
+        // %H - article headline
+        else if (match == "%H")
+            return fields.article_title
 
         // Everything else is returned unchanged.
         else
