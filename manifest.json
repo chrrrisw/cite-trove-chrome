@@ -4,19 +4,19 @@
   "version": "0.1",
   "description": "Copies selected information from the NLA Trove Newspaper website to the clipboard.",
   "icons": {
-    "16": "icon16inv.png",
-    "19": "icon19inv.png",
-    "32": "icon32inv.png",
-    "48": "icon48inv.png",
-    "128": "icon128inv.png"
+    "16": "cite-trove-logo16.png",
+    "19": "cite-trove-logo19.png",
+    "32": "cite-trove-logo32.png",
+    "48": "cite-trove-logo48.png",
+    "128": "cite-trove-logo128.png"
     },
   "page_action": {
     "default_icon": {
-      "16": "icon16inv.png",
-      "19": "icon19inv.png",
-      "32": "icon32inv.png",
-      "48": "icon48inv.png",
-      "128": "icon128inv.png"
+      "16": "cite-trove-logo16.png",
+      "19": "cite-trove-logo19.png",
+      "32": "cite-trove-logo32.png",
+      "48": "cite-trove-logo48.png",
+      "128": "cite-trove-logo128.png"
     },
     "default_title": "Cite Trove"
   },
