@@ -27,7 +27,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://trove.nla.gov.au/*"],
+      "matches": ["http://trove.nla.gov.au/*", "http://trove-beta.nla.gov.au/*"],
       "js": ["scraper.js", "content.js"]
     }
   ],

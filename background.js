@@ -80,7 +80,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         "title" : "Cite Trove",
         "contexts" : ["selection"],
         "id" : "citeTrove",
-        "documentUrlPatterns": ["http://trove.nla.gov.au/*"]
+        "documentUrlPatterns": ["http://trove.nla.gov.au/*", "http://trove-beta.nla.gov.au/*"]
     });
 
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
