@@ -9,7 +9,8 @@ if (typeof exports != 'undefined') {
     exports.formatCitation = formatCitation;
 }
 
-var page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
+var old_page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
+var page_regexp = new RegExp("http://trove.nla.gov.au/newspaper/article/\\d+");
 
 function formatCitation(format, fields) {
     var copyText = format.replace(/%./g, function(match, pattern, offset, string) {
@@ -43,7 +44,7 @@ function formatCitation(format, fields) {
                 // New interface
                 return fields.persistent_url;
             } else {
-                var page_match = fields.url.match(page_regexp);
+                var page_match = fields.url.match(old_page_regexp);
                 if (page_match == null)
                     return fields.url;
 
@@ -69,7 +70,11 @@ function formatCitation(format, fields) {
 
         // %P - Article Page number
         else if (match == "%P")
-            return fields.page;
+            return fields.page_number;
+
+        // %p - Page URL
+        else if (match == "%p")
+            return fields.news_page_url;
 
         // %Q - Selected OCR Text
         else if (match == "%Q")
@@ -78,6 +83,24 @@ function formatCitation(format, fields) {
         // %H - article headline
         else if (match == "%H")
             return fields.article_title
+
+        // Citation formats
+
+        // %a - APA citation
+        else if (match == "%a")
+            return fields.apa_ref;
+
+        // %m - MLA citation
+        else if (match == "%m")
+            return fields.mla_ref;
+
+        // %h - Harvard/Australian citation
+        else if (match == "%h")
+            return fields.harvard_ref;
+
+        // %w - Wikipedia citation
+        else if (match == "%w")
+            return fields.wiki_ref;
 
         // Everything else is returned unchanged.
         else
