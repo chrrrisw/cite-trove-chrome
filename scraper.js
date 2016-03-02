@@ -36,7 +36,7 @@ function parsePage() {
 
     if (persistent_url) {
         // We have the new page
-        console.log('New interface');
+        // console.log('New interface');
 
         title_element = document.querySelector("[ref=ndp\\:titleSelector]");
         newspaper_title = title_element && title_element.innerHTML.trim();
@@ -68,8 +68,8 @@ function parsePage() {
             dd_element = dt_elements[index].nextElementSibling;
             dt_text = dt_elements[index].innerHTML.trim();
             dd_text = dd_element.innerHTML.trim()
-            console.log(dt_text);
-            console.log(dd_text);
+            // console.log(dt_text);
+            // console.log(dd_text);
 
             if (dt_text == 'Article identifier') {
             } else if (dt_text == 'Page identifier') {
@@ -90,7 +90,7 @@ function parsePage() {
     } else {
 
         // We have the old page
-        console.log('Old interface');
+        // console.log('Old interface');
 
         title_element = document.getElementsByClassName("box title")[0];
         if (title_element) {
@@ -125,10 +125,10 @@ function parsePage() {
         article_title = article_element && article_element.getAttribute("content").trim();
     }
 
-    console.log('Title: ' + newspaper_title);
-    console.log('Issue: ' + newspaper_issue);
-    console.log('Page: ' + newspaper_page_number);
-    console.log('Article: ' + article_title);
+    // console.log('Title: ' + newspaper_title);
+    // console.log('Issue: ' + newspaper_issue);
+    // console.log('Page: ' + newspaper_page_number);
+    // console.log('Article: ' + article_title);
 
     // Return the information gathered
     return {

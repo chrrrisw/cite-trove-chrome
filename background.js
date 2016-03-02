@@ -6,9 +6,9 @@
  *
  */
 function citeTroveResponseHandler(response) {
-    console.log('Response received');
-    console.log('\tError: ' + chrome.runtime.lastError);
-    console.log('\tResponse: ' + JSON.stringify(response));
+    console.log('Unexpected Response received');
+    // console.log('\tError: ' + chrome.runtime.lastError);
+    // console.log('\tResponse: ' + JSON.stringify(response));
 }
 
 /**
@@ -16,7 +16,7 @@ function citeTroveResponseHandler(response) {
  */
 function onClickHandler(info, tab) {
     if (info.menuItemId == "citeTrove") {
-        console.log('citeTrove pressed');
+        // console.log('citeTrove pressed');
         chrome.tabs.sendMessage(
             tab.id,
             {type : "cite"},
@@ -89,7 +89,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 });
 
 function pageActionCallback(tab) {
-    console.log('pageAction pressed');
+    // console.log('pageAction pressed');
     chrome.tabs.sendMessage(
         tab.id,
         {type : "cite"},
