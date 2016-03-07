@@ -9,7 +9,6 @@ if (typeof exports != 'undefined') {
     exports.formatCitation = formatCitation;
 }
 
-var old_page_regexp = new RegExp("http://trove.nla.gov.au/ndp/del/article/\\d+");
 var page_regexp = new RegExp("http://trove.nla.gov.au/newspaper/article/\\d+");
 
 function formatCitation(format, fields) {
@@ -38,23 +37,8 @@ function formatCitation(format, fields) {
         }
 
         // %A - Persistent Article URL (preferred)
-        else if (match == "%A") {
-
-            if (fields.persistent_url) {
-                // New interface
-                return fields.persistent_url;
-            } else {
-                var page_match = fields.url.match(old_page_regexp);
-                if (page_match == null)
-                    return fields.url;
-
-                if (page_match.length == 0)
-                    return fields.url;
-                else
-                    return "http://nla.gov.au/nla.news-article" + page_match[0].match("\\d+");
-            }
-
-        }
+        else if (match == "%A")
+            return fields.persistent_url;
 
         // %C - Current date and time
         else if (match == "%C")
