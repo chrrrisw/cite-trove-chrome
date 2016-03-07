@@ -16,6 +16,7 @@ function parsePage() {
     var article_element;
     var article_title;
 
+    var href_re = /href=['"](.*)['"]/i;
     var news_page_url;
     var apa_ref;
     var mla_ref;
@@ -129,6 +130,18 @@ function parsePage() {
     // console.log('Issue: ' + newspaper_issue);
     // console.log('Page: ' + newspaper_page_number);
     // console.log('Article: ' + article_title);
+
+    // Adjust the results.
+    if (newspaper_page_number) {
+        newspaper_page_number = newspaper_page_number.replace('Page ', '');
+    }
+
+    if (news_page_url) {
+        var href_match = news_page_url.match(href_re);
+        if (href_match) {
+            news_page_url = href_match[1];
+        }
+    }
 
     // Return the information gathered
     return {
