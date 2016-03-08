@@ -6,9 +6,9 @@
  *
  */
 function citeTroveResponseHandler(response) {
-    console.log('Unexpected Response received');
-    // console.log('\tError: ' + chrome.runtime.lastError);
-    // console.log('\tResponse: ' + JSON.stringify(response));
+    console.log("Unexpected Response received");
+    console.log("\tError: " + chrome.runtime.lastError);
+    console.log("\tResponse: " + JSON.stringify(response));
 }
 
 /**
@@ -16,17 +16,17 @@ function citeTroveResponseHandler(response) {
  */
 function onClickHandler(info, tab) {
     if (info.menuItemId == "citeTrove") {
-        // console.log('citeTrove pressed');
+        // console.log("citeTrove pressed");
         chrome.tabs.sendMessage(
             tab.id,
             {type : "cite"},
             citeTroveResponseHandler);
 
     } else {
-        console.log('Not citeTrove menu item');
+        console.log("Not citeTrove menu item");
 
     }
-};
+}
 
 /**
  * Add a listener for clicks in the context menu.
@@ -38,14 +38,14 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
  */
 function formatAndCopy(message) {
     chrome.storage.sync.get({
-        troveFormat: '%A%n%C%n%T%n%I, page %P%n[Quote]%n%Q%n[Quote]%n'
+        troveFormat: "%A%n%C%n%T%n%I, page %P%n[Quote]%n%Q%n[Quote]%n"
       }, function(items) {
-        var input = document.createElement('textarea');
+        var input = document.createElement("textarea");
         document.body.appendChild(input);
         input.value = formatCitation(items.troveFormat, message);
         input.focus();
         input.select();
-        document.execCommand('Copy');
+        document.execCommand("Copy");
         input.remove();
 
       });
@@ -66,7 +66,7 @@ chrome.runtime.onMessage.addListener(function(message) {
 var pageActionRule = {
     conditions: [
         new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { hostEquals: 'trove.nla.gov.au', schemes: ['http', 'https'] }
+            pageUrl: { hostEquals: "trove.nla.gov.au", schemes: ["http", "https"] }
         })
     ],
     actions: [ new chrome.declarativeContent.ShowPageAction() ]
@@ -89,7 +89,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 });
 
 function pageActionCallback(tab) {
-    // console.log('pageAction pressed');
+    // console.log("pageAction pressed");
     chrome.tabs.sendMessage(
         tab.id,
         {type : "cite"},

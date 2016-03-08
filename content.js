@@ -11,7 +11,7 @@ function processMessage(message, sender, sendResponse) {
     if (message.type == "cite") {
         chrome.runtime.sendMessage(parsePage());
     } else {
-        console.log('Unexpected message');
+        console.log("Unexpected message");
     }
 }
 

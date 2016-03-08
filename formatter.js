@@ -5,7 +5,7 @@
  * per the format specified.
  */
 
-if (typeof exports != 'undefined') {
+if (typeof exports != "undefined") {
     exports.formatCitation = formatCitation;
 }
 
@@ -26,10 +26,10 @@ function formatCitation(format, fields) {
         else if (match == "%u") {
 
             var page_match = fields.url.match(page_regexp);
-            if (page_match == null)
+            if (page_match === null)
                 return fields.url;
 
-            if (page_match.length == 0)
+            if (page_match.length === 0)
                 return fields.url;
             else
                 return page_match[0];
@@ -66,7 +66,7 @@ function formatCitation(format, fields) {
 
         // %H - article headline
         else if (match == "%H")
-            return fields.article_title
+            return fields.article_title;
 
         // Citation formats
 

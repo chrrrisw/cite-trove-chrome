@@ -4,25 +4,6 @@
 
 function parsePage() {
 
-    var title_element;
-    var newspaper_title;
-
-    var issue_element;
-    var newspaper_issue;
-
-    var pages_element;
-    var newspaper_page_number;
-
-    var article_element;
-    var article_title;
-
-    var href_re = /href=['"](.*)['"]/i;
-    var news_page_url;
-    var apa_ref;
-    var mla_ref;
-    var harvard_ref;
-    var wiki_ref;
-
     // Get the selected text
     var selection = window.getSelection().toString();
 
@@ -35,17 +16,17 @@ function parsePage() {
     var url_element = document.querySelector('meta[property="og:url"]');
     var persistent_url = url_element && url_element.getAttribute("content");
 
-    title_element = document.querySelector("[ref=ndp\\:titleSelector]");
-    newspaper_title = title_element && title_element.innerHTML.trim();
+    var title_element = document.querySelector("[ref=ndp\\:titleSelector]");
+    var newspaper_title = title_element && title_element.innerHTML.trim();
 
-    issue_element = document.querySelector("[ref=ndp\\:issueSelector]");
-    newspaper_issue = issue_element && issue_element.innerHTML.trim();
+    var issue_element = document.querySelector("[ref=ndp\\:issueSelector]");
+    var newspaper_issue = issue_element && issue_element.innerHTML.trim();
 
-    pages_element = document.querySelector("[ref=ndp\\:pageSelector]");
-    newspaper_page_number = pages_element && pages_element.innerHTML.trim();
+    var pages_element = document.querySelector("[ref=ndp\\:pageSelector]");
+    var newspaper_page_number = pages_element && pages_element.innerHTML.trim();
 
-    article_element = document.querySelector("[ref=ndp\\:articleSelector]");
-    article_title = article_element && article_element.innerHTML.trim();
+    var article_element = document.querySelector("[ref=ndp\\:articleSelector]");
+    var article_title = article_element && article_element.innerHTML.trim();
 
     // var element = document.querySelector('meta[property="og:title"]');
     // var content = element && element.getAttribute("content");
@@ -58,42 +39,49 @@ function parsePage() {
     // var element = document.querySelector('meta[property="og:site_name"]');
     // var content = element && element.getAttribute("content");
 
+    var news_page_url;
+    var apa_ref;
+    var mla_ref;
+    var harvard_ref;
+    var wiki_ref;
+
     var dt_elements = document.getElementsByTagName("dt");
     var dd_element;
     var dt_text;
     for (var index = 0; index < dt_elements.length; index++) {
         dd_element = dt_elements[index].nextElementSibling;
         dt_text = dt_elements[index].innerHTML.trim();
-        dd_text = dd_element.innerHTML.trim()
+        dd_text = dd_element.innerHTML.trim();
         // console.log(dt_text);
         // console.log(dd_text);
 
-        if (dt_text == 'Article identifier') {
-        } else if (dt_text == 'Page identifier') {
+        if (dt_text == "Article identifier") {
+        } else if (dt_text == "Page identifier") {
             // Currently returns HTML <a> tag.
             news_page_url = dd_text;
-        } else if (dt_text == 'APA citation') {
+        } else if (dt_text == "APA citation") {
             apa_ref = dd_text;
-        } else if (dt_text == 'MLA citation') {
+        } else if (dt_text == "MLA citation") {
             mla_ref = dd_text;
-        } else if (dt_text == 'Harvard/Australian citation') {
+        } else if (dt_text == "Harvard/Australian citation") {
             harvard_ref = dd_text;
-        } else if (dt_text == 'Wikipedia citation') {
+        } else if (dt_text == "Wikipedia citation") {
             wiki_ref = dd_text;
         }
 
     }
 
-    // console.log('Title: ' + newspaper_title);
-    // console.log('Issue: ' + newspaper_issue);
-    // console.log('Page: ' + newspaper_page_number);
-    // console.log('Article: ' + article_title);
+    // console.log("Title: " + newspaper_title);
+    // console.log("Issue: " + newspaper_issue);
+    // console.log("Page: " + newspaper_page_number);
+    // console.log("Article: " + article_title);
 
     // Adjust the results.
     if (newspaper_page_number) {
-        newspaper_page_number = newspaper_page_number.replace('Page ', '');
+        newspaper_page_number = newspaper_page_number.replace("Page ", "");
     }
 
+    var href_re = /href=[""](.*)[""]/i;
     if (news_page_url) {
         var href_match = news_page_url.match(href_re);
         if (href_match) {
@@ -103,20 +91,20 @@ function parsePage() {
 
     // Return the information gathered
     return {
-        'type': 'citation',
-        'url': url,
-        'persistent_url': persistent_url,
-        'today': today,
-        'title': newspaper_title,
-        'issue': newspaper_issue,
-        'page_number': newspaper_page_number,
-        'article_title': article_title,
-        'news_page_url': news_page_url,
-        'apa_ref': apa_ref,
-        'mla_ref': mla_ref,
-        'harvard_ref': harvard_ref,
-        'wiki_ref': wiki_ref,
-        'selection': selection
+        "type": "citation",
+        "url": url,
+        "persistent_url": persistent_url,
+        "today": today,
+        "title": newspaper_title,
+        "issue": newspaper_issue,
+        "page_number": newspaper_page_number,
+        "article_title": article_title,
+        "news_page_url": news_page_url || "",
+        "apa_ref": apa_ref || "",
+        "mla_ref": mla_ref || "",
+        "harvard_ref": harvard_ref || "",
+        "wiki_ref": wiki_ref || "",
+        "selection": selection
     };
 
 }
