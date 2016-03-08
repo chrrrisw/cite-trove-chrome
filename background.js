@@ -3,15 +3,6 @@
  */
 
 /**
- *
- */
-function citeTroveResponseHandler(response) {
-    console.log("Unexpected Response received");
-    console.log("\tError: " + chrome.runtime.lastError);
-    console.log("\tResponse: " + JSON.stringify(response));
-}
-
-/**
  * The callback function for the citeTrove menu item.
  */
 function onClickHandler(info, tab) {
@@ -19,8 +10,7 @@ function onClickHandler(info, tab) {
         // console.log("citeTrove pressed");
         chrome.tabs.sendMessage(
             tab.id,
-            {type : "cite"},
-            citeTroveResponseHandler);
+            {type : "cite"});
 
     } else {
         console.log("Not citeTrove menu item");
