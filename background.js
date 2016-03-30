@@ -82,8 +82,7 @@ function pageActionCallback(tab) {
     // console.log("pageAction pressed");
     chrome.tabs.sendMessage(
         tab.id,
-        {type : "cite"},
-        citeTroveResponseHandler);
+        {type : "cite"});
 }
 
 chrome.pageAction.onClicked.addListener(pageActionCallback);
