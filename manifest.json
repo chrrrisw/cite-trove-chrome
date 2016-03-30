@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cite Trove",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Copies selected information from the NLA Trove Newspaper website to the clipboard.",
   "icons": {
     "16": "cite-trove-logo16.png",
