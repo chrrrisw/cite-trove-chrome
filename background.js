@@ -1,6 +1,16 @@
 /**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
  * @author Chris Willoughby
  */
+
+"use strict";
+
+function onError(error) {
+    console.error(`Error: ${error}`);
+}
 
 /**
  * The callback function for the citeTrove menu item.
@@ -10,11 +20,8 @@ function onClickHandler(info, tab) {
         // console.log("citeTrove pressed");
         chrome.tabs.sendMessage(
             tab.id,
-            {type : "cite"});
-
-    } else {
-        console.log("Not citeTrove menu item");
-
+            {type : "cite"}
+        );
     }
 }
 
@@ -70,7 +77,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         "title" : "Cite Trove",
         "contexts" : ["selection"],
         "id" : "citeTrove",
-        "documentUrlPatterns": ["http://trove.nla.gov.au/*", "http://trove-beta.nla.gov.au/*"]
+        "documentUrlPatterns": ["http://trove.nla.gov.au/newspaper/*", "https://trove.nla.gov.au/newspaper/*"]
     });
 
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {

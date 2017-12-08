@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cite Trove",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Copies selected information from the NLA Trove Newspaper website to the clipboard.",
   "icons": {
     "16": "cite-trove-logo16.png",
@@ -31,7 +31,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://trove.nla.gov.au/*", "http://trove-beta.nla.gov.au/*"],
+      "matches": ["http://trove.nla.gov.au/newspaper/*", "https://trove.nla.gov.au/newspaper/*"],
       "js": ["scraper.js", "content.js"]
     }
   ],
